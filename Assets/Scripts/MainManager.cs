@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,36 +8,66 @@ using UnityEngine.UI;
 public class MainManager : MonoBehaviour
 {
     public Brick BrickPrefab;
+    public Indestructable IndestructablePrefab;
+    public ToughBrick ToughPrefab;
+
     public int LineCount = 6;
     public Rigidbody Ball;
 
     public Text ScoreText;
     public Text BestScoreText;
     public GameObject GameOverText;
-    
+
     private bool m_Started = false;
     private int m_Points;
-    
+
     private bool m_GameOver = false;
 
-    
+
     // Start is called before the first frame update
     void Start()
     {
         UpdateBestScoreText();
 
+        SpawnLevel();
+    }
+
+    private void SpawnLevel()
+    {
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
 
-        int[] pointCountArray = new[] { 1, 1, 2, 2, 5, 5 };
+        int[] pointCountArray = new[] { 0, 1, 2, 2, 5, 7 };
         for (int i = 0; i < LineCount; ++i)
         {
             for (int x = 0; x < perLine; ++x)
             {
                 Vector3 position = new Vector3(-1.5f + step * x, 2.5f + i * 0.3f, 0);
-                var brick = Instantiate(BrickPrefab, position, Quaternion.identity);
-                brick.PointValue = pointCountArray[i];
-                brick.onDestroyed.AddListener(AddPoint);
+                switch (pointCountArray[i])
+                {
+                    case 0:
+                    {
+                        var brick = Instantiate(this.IndestructablePrefab, position, Quaternion.identity);
+                        brick.PointValue = pointCountArray[i];
+                        break;
+                    }
+
+                    case 7:
+                    {
+                        var brick = Instantiate(this.ToughPrefab, position, Quaternion.identity);
+                        brick.PointValue = pointCountArray[i];
+                        brick.onDestroyed.AddListener(AddPoint);
+                        break;
+                    }
+
+                    default:
+                    {
+                        var brick = Instantiate(BrickPrefab, position, Quaternion.identity);
+                        brick.PointValue = pointCountArray[i];
+                        brick.onDestroyed.AddListener(AddPoint);
+                        break;
+                    }
+                }
             }
         }
     }
