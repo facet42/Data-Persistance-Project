@@ -5,7 +5,7 @@ using UnityEngine;
 public class Indestructable : Brick // INHERITANCE
 {
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
         var renderer = GetComponentInChildren<Renderer>();
 
@@ -15,7 +15,7 @@ public class Indestructable : Brick // INHERITANCE
     }
 
     // POLYMORPHISM
-    private void OnCollisionEnter(Collision collision)
+    protected override void OnCollisionEnter(Collision collision)
     {
         // Override the collision method to ensure the brick is not destroyed
     }

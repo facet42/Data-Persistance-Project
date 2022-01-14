@@ -10,8 +10,12 @@ public class Brick : MonoBehaviour
     
     public int PointValue;
 
-    void Start()
+    protected MainManager mainManager;
+
+    protected virtual void Start()
     {
+        this.mainManager = GameObject.Find("MainManager").GetComponent<MainManager>();
+
         var renderer = GetComponentInChildren<Renderer>();
 
         MaterialPropertyBlock block = new MaterialPropertyBlock();
@@ -30,14 +34,27 @@ public class Brick : MonoBehaviour
                 block.SetColor("_BaseColor", Color.red);
                 break;
         }
+
         renderer.SetPropertyBlock(block);
     }
 
-    private void OnCollisionEnter(Collision other)
+    protected virtual void OnCollisionEnter(Collision other)
     {
+        Debug.Log("Base collision");
+
+        RemoveBrick();
+    }
+
+    public void RemoveBrick()
+    {
+        Debug.Assert(this.mainManager != null);
+
+        // TODO: Add random chance
+        this.mainManager.SpawnRandomPowerup(this.gameObject.transform.position);
+
         onDestroyed.Invoke(PointValue);
-        
+
         //slight delay to be sure the ball have time to bounce
-        Destroy(gameObject, 0.2f);
+        Destroy(this.gameObject, 0.2f);
     }
 }

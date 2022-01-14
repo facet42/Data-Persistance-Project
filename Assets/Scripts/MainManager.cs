@@ -10,6 +10,7 @@ public class MainManager : MonoBehaviour
     public Brick BrickPrefab;
     public Indestructable IndestructablePrefab;
     public ToughBrick ToughPrefab;
+    public PowerUp PowerUpPrefab;
 
     public int LineCount = 6;
     public Rigidbody Ball;
@@ -30,6 +31,11 @@ public class MainManager : MonoBehaviour
         UpdateBestScoreText();
 
         SpawnLevel();
+    }
+
+    public void SpawnRandomPowerup(Vector3 position)
+    {
+        Instantiate(this.PowerUpPrefab, position, this.PowerUpPrefab.transform.rotation);
     }
 
     private void SpawnLevel()

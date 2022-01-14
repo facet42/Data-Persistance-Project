@@ -28,4 +28,9 @@ public class Paddle : MonoBehaviour
 
         transform.position = pos;
     }
+
+    public void ApplyPowerUp(int powerUp)
+    {
+        Debug.Log("Power-up applied");
+    }
 }

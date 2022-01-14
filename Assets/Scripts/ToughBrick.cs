@@ -11,8 +11,10 @@ public class ToughBrick : Brick // INHERITANCE
     private MaterialPropertyBlock materialBlock;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        this.mainManager = GameObject.Find("MainManager").GetComponent<MainManager>();
+
         BrickRenderer = GetComponentInChildren<Renderer>();
 
         SetColour(Color.red);
@@ -26,18 +28,24 @@ public class ToughBrick : Brick // INHERITANCE
     }
 
     // POLYMORPHISM
-    private void OnCollisionEnter(Collision other)
+    protected override void OnCollisionEnter(Collision other)
     {
+        Debug.Log("Tough collision");
+
+        this.Strength -= 1;
+
         // TODO: Handle more damage levels
         SetColour(Color.yellow);
 
         // Only destroy once it has been hit multiple times
-        if (--Strength <= 0)
+        if (Strength <= 0)
         {
-            onDestroyed.Invoke(PointValue);
+            RemoveBrick();
 
-            //slight delay to be sure the ball have time to bounce
-            Destroy(gameObject, 0.2f);
+            //onDestroyed.Invoke(PointValue);
+
+            ////slight delay to be sure the ball have time to bounce
+            //Destroy(this.gameObject, 0.2f);
         }
     }
 }
