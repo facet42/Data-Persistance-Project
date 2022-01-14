@@ -40,14 +40,16 @@ public class Brick : MonoBehaviour
 
     protected virtual void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Base collision");
+        //Debug.Log("Base collision");
 
         RemoveBrick();
     }
 
     public void RemoveBrick()
     {
-        Debug.Assert(this.mainManager != null);
+        //Debug.Assert(this.mainManager != null);
+
+        this.mainManager.ReduceBrickCount();
 
         // TODO: Add random chance
         this.mainManager.SpawnRandomPowerup(this.gameObject.transform.position);

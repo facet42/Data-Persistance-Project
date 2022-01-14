@@ -30,9 +30,10 @@ public class ToughBrick : Brick // INHERITANCE
     // POLYMORPHISM
     protected override void OnCollisionEnter(Collision other)
     {
-        Debug.Log("Tough collision");
+        //Debug.Log("Tough collision");
 
         this.Strength -= 1;
+        GameManager.Instance.AddScore(1);
 
         // TODO: Handle more damage levels
         SetColour(Color.yellow);
