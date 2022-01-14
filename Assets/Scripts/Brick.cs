@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+using Random = UnityEngine.Random;
+
 public class Brick : MonoBehaviour
 {
     public UnityEvent<int> onDestroyed;
@@ -11,6 +13,8 @@ public class Brick : MonoBehaviour
     public int PointValue;
 
     protected MainManager mainManager;
+
+    [SerializeField] int powerupChance = 5;
 
     protected virtual void Start()
     {
@@ -51,8 +55,11 @@ public class Brick : MonoBehaviour
 
         this.mainManager.ReduceBrickCount();
 
-        // TODO: Add random chance
-        this.mainManager.SpawnRandomPowerup(this.gameObject.transform.position);
+        // Add random chance a power-up will spawn
+        if (Random.Range(0, this.powerupChance) == 0)
+        {
+            this.mainManager.SpawnRandomPowerup(this.gameObject.transform.position);
+        }
 
         onDestroyed.Invoke(PointValue);
 

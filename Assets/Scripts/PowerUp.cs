@@ -28,6 +28,7 @@ public class PowerUp : MonoBehaviour
         {
             var player = other.gameObject.GetComponent<Paddle>();
             player.ApplyPowerUp(this.powerUpType);
+            Destroy(this.gameObject);
         }
     }
 }
