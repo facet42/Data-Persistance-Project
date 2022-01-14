@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     private string saveFile;
 
+    public int Score { get; private set; }
+
     // Awake is called when the script instance is being loaded
     private void Awake()
     {
@@ -59,6 +61,16 @@ public class GameManager : MonoBehaviour
             this.HighScoreName = "Mr Magoo";
             this.HighScore = 0;
         }
+    }
+
+    public void AddScore(int points)
+    {
+        this.Score += points;
+    }
+
+    public void ResetScore()
+    {
+        this.Score = 0;
     }
 
     struct SaveData
