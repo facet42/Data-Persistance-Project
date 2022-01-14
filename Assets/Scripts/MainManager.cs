@@ -163,4 +163,9 @@ public class MainManager : MonoBehaviour
 
         currentLevel = 0;
     }
+
+    public void OnQuitClicked()
+    {
+        SceneManager.LoadScene("menu");
+    }
 }
